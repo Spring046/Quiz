@@ -28,7 +28,7 @@ let score = 0;
 let answersDisabled = false;
 
 totalQuestionsSpan.textContent = quizQuestions.length;
-maxScoreSpan.textContent = quizQuestions.length;
+document.getElementById("max-score").textContent = quizQuestions.length;
 
 // Event Listeners
 startButton.addEventListener("click", startQuiz);
@@ -38,8 +38,10 @@ function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
   scoreSpan.textContent = 0;
+
   startScreen.classList.remove("active");
   quizScreen.classList.add("active");
+
   showQuestion();
 }
 
@@ -72,11 +74,8 @@ function selectAnswer(event) {
   const isCorrect = selectedButton.dataset.correct === "true";
 
   Array.from(answersContainer.children).forEach(button => {
-    if (button.dataset.correct === "true") {
-      button.classList.add("correct");
-    } else if (button === selectedButton) {
-      button.classList.add("incorrect");
-    }
+    if (button.dataset.correct === "true") button.classList.add("correct");
+    else if (button === selectedButton) button.classList.add("incorrect");
   });
 
   if (isCorrect) {
@@ -86,11 +85,8 @@ function selectAnswer(event) {
 
   setTimeout(() => {
     currentQuestionIndex++;
-    if (currentQuestionIndex < quizQuestions.length) {
-      showQuestion();
-    } else {
-      showResults();
-    }
+    if (currentQuestionIndex < quizQuestions.length) showQuestion();
+    else showResults();
   }, 1000);
 }
 
